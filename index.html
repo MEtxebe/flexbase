@@ -2,6 +2,56 @@
 	<head>
 
 		<link href="estiloak.css" rel="stylesheet">
+
+		<script>
+			let liburuak = [];
+			let i= 0;
+
+			const jsonDB = fetch("datubasea.json");
+
+
+			window.onload = function() {
+				async function kargatuLiburuak() {
+					try {
+						const response = await fetch('datubasea.json'); // Cambia esta ruta si el JSON está en otra ubicación
+						if (!response.ok) {
+							throw new Error(`HTTP error! Status: ${response.status}`);
+						}
+						liburuak = await response.json();
+						erakutsi();
+					} catch (error) {
+						console.error('Error cargando el JSON:', error);
+					}
+				}
+				function erakutsi(){
+					document.getElementById("izenburua").value = liburuak[i].izenburua;
+					document.getElementById("egilea").value = liburuak[i].egilea;
+					document.getElementById("isbn").value = liburuak[i].isbn;
+					document.getElementById("data").value = liburuak[i].data;
+					document.getElementById("irudia").src = "https://covers.openlibrary.org/b/id/" + liburuak[i].filename;
+				}
+	
+				document.getElementById("aurrera").addEventListener("click", function(){
+				
+					if(i < liburuak.length-1){
+						i++;
+						erakutsi();
+					}
+				
+				});
+
+				document.getElementById("atzera").addEventListener("click", function(){
+					if(i > 0){
+						i--;
+						erakutsi();
+					}				
+				});
+				kargatuLiburuak();
+			};
+
+		</script>
+
+
 	</head>
 	<body>
 
