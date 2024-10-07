@@ -44,7 +44,26 @@
 					if(i > 0){
 						i--;
 						erakutsi();
-					}				
+					}	
+					
+					
+
+					let bilatu = document.getElementById("bilatu");
+
+					bilatu.addEventListener("click", function(){
+						let isbn = document.getElementById("isbn").value;
+						fetch("https://openlibrary.org/api/books?bibkeys=ISBN:" + isbn + "&format=json&jscmd=data")
+						.then(response => response.json())
+						.then(data => {
+							let liburua = data["ISBN:" + isbn];
+							document.getElementById("izenburua").value = liburua.title;
+							document.getElementById("egilea").value = liburua.authors[0].name;
+							document.getElementById("data").value = liburua.publish_date;
+							document.getElementById("irudia").src = liburua.cover.medium;
+						});
+						
+
+					});
 				});
 				kargatuLiburuak();
 			};
@@ -75,6 +94,7 @@
 			Data: <input type="text" id="data">
 		</p>
 		<p>
+		<button id="bilatu">Bilatu</button>
 		<div class="edukiontzia">
 			<div class="ezker">
 				<button id="atzera">&lt;&lt;</button>
