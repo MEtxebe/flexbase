@@ -12,16 +12,9 @@
 
 			window.onload = function() {
 				async function kargatuLiburuak() {
-					try {
 						const response = await fetch('datubasea.json'); // Cambia esta ruta si el JSON está en otra ubicación
-						if (!response.ok) {
-							throw new Error(`HTTP error! Status: ${response.status}`);
-						}
 						liburuak = await response.json();
 						erakutsi();
-					} catch (error) {
-						console.error('Error cargando el JSON:', error);
-					}
 				}
 				function erakutsi(){
 					document.getElementById("izenburua").value = liburuak[i].izenburua;
@@ -63,7 +56,20 @@
 						});
 						
 
-					});
+					});/*
+					async function bilaketa(){
+						let isbn = document.getElementById("isbn").value;
+						const promise= await fetch("https://openlibrary.org/api/books?bibkeys=ISBN:" + isbn + "&format=json&jscmd=data");
+						const response=await promise.json();
+
+						document.getElementById("izenburua").value = response.title;
+						document.getElementById("egilea").value = response.authors[0].name;
+						document.getElementById("data").value = response.publish_date;
+						document.getElementById("irudia").src = response.cover.medium;
+						
+					}
+
+					bilatu.addEventListener("click", bilaketa);*/
 				});
 				kargatuLiburuak();
 			};
